@@ -32,7 +32,16 @@ export default function(request) {
         }
 
         function _onResponse(config, rawResponse) {
-            const response = responseFactory(rawResponse, endpoint);
+
+            var response
+
+            if ('metadata' in endpoint) {
+                response = responseFactory(assign([], rawResponse), endpoint);
+            } else {
+                response = responseFactory(rawResponse, endpoint);
+            }
+
+
             scope.emit('response', response, serialize(config));
             return response;
         }

@@ -52,7 +52,15 @@ exports['default'] = function (request) {
         }
 
         function _onResponse(config, rawResponse) {
-            var response = (0, _response2['default'])(rawResponse, endpoint);
+
+            var response;
+
+            if ('metadata' in endpoint) {
+                response = (0, _response2['default'])((0, _objectAssign2['default'])([], rawResponse), endpoint);
+            } else {
+                response = (0, _response2['default'])(rawResponse, endpoint);
+            }
+
             scope.emit('response', response, (0, _utilSerialize2['default'])(config));
             return response;
         }
